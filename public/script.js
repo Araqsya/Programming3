@@ -60,10 +60,10 @@ function setup() {
                 BirdArr.push(new Bird(x, y, 4))
             }
             else if (matrix[y][x] == 6) {
-                MaleArr.push(new Male(x, y, 4))
+                MaleArr.push(new Male(x, y, 6))
             }
             else if (matrix[y][x] == 7) {
-                FemaleArr.push(new Female(x, y, 4))
+                FemaleArr.push(new Female(x, y, 6))
             }
         }
     }
@@ -131,7 +131,6 @@ function draw() {
 
 
 }
-
 
 
 
