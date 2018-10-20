@@ -36,18 +36,18 @@ class Grass extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.inf = false
-        this.multiply=0
+        this.multiply = 0
     }
     getNewCoordinates() {
         this.directions = [
-            [this.x - 3, this.y - 3],
-            [this.x, this.y - 3],
-            [this.x + 3, this.y - 3],
-            [this.x - 3, this.y],
-            [this.x + 3, this.y],
-            [this.x - 3, this.y + 3],
-            [this.x, this.y + 3],
-            [this.x + 3, this.y + 3]
+            [this.x - 1, this.y - 1],
+            [this.x, this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x, this.y + 1],
+            [this.x + 1, this.y + 1]
         ];
     }
     chooseCell(character) {
@@ -56,22 +56,22 @@ class Grass extends LivingCreature {
     }
     infection() {
         var emptyCells = this.chooseCell(8);
-        var virus = random(emptyCells);
-        if (virus) {
-            this.inf == true
+        if (emptyCells) {
+            this.inf = true
         }
         else {
-            this.inf == false
+            this.inf = false
         }
+
     }
     mul() {
         this.multiply++;
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         this.infection()
-        if(this.multiply==5){
-            this.transvirus()
-        } 
+        if(this.multiply>=5){
+            this.transtoxic()
+        }
         if (this.multiply >= 8 && newCell) {
             var newGrass = new Grass(newCell[0], newCell[1], this.index, this.inf);
             grassArr.push(newGrass);
@@ -79,13 +79,18 @@ class Grass extends LivingCreature {
             this.multiply = 0;
         }
     }
-   transvirus() {
-        if (this.inf==true){
-                var newVirus = new (newCell[0], newCell[1], this.index);
-            VirusArr.push(newVirus);
-            matrix[newCell[1]][newCell[0]] == 8;
-            this.energy = 10;
-            console.log(this.x, this.y, this.inf)
-                }
-        }
+       transtoxic() {
+           if (this.inf == true) {
+               for (var i in grassArr) {
+                   if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
+                       grassArr.splice(i, 1);
+                       break;
+                   }
+                   matrix[this.y][this.x] = 9;
+                   var newTXC = new TXCgrass(this.x, this.y, 9);
+                   TXCgrassArr.push(newTXC);
+               }
+           }
+   
+       }
 }

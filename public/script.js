@@ -24,7 +24,11 @@ function createMatrix(n, m) {
     matrix1[51][45] = 6;
     matrix1[49][45] = 6;
     matrix1[50][46] = 7;
-    matrix1[45][64]=8;
+    matrix1[45][64] = 8;
+    matrix1[35][4] = 8;
+    matrix1[56][24] = 8;
+    matrix1[46][34] = 9;
+
 
     
     
@@ -38,6 +42,7 @@ var EggArr = [];
 var MaleArr = [];
 var FemaleArr = [];
 var VirusArr=[];
+var TXCgrassArr = [];
 var matrix = createMatrix(100, 100);
 
 var side = 5;
@@ -72,6 +77,9 @@ function setup() {
             }
             else if (matrix[y][x] == 8) {
                 VirusArr.push(new Virus(x, y, 8))
+            }
+            else  if (matrix[y][x] == 9) {
+                TXCgrassArr.push(new TXCgrass(x, y, 9))
             }
         }
     }
@@ -108,7 +116,11 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 8) {
-                fill('white');
+                fill('black');
+                rect(x * side, y * side, side, side);
+            }
+            else  if (matrix[y][x] == 9) {
+                fill('lightgreen');
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 0) {

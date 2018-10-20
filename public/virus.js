@@ -22,16 +22,14 @@ class Virus extends LivingCreature {
    mul() {
     var emptyCells = this.chooseCell(0);
     var newCell = random(emptyCells);
-    if (this.age ==20) {
+    if (this.age ==25) {
         var newVirus = new Virus(newCell[0], newCell[1], this.index);
         VirusArr.push(newVirus);
         matrix[newCell[1]][newCell[0]] == 8;
-        this.age = 0;
-    }
-    
+    }   
 }
 die() {
-    if (this.age ==30 ) {
+    if (this.age >=30 ) {
     for (var i in VirusArr) {
         if (this.x == VirusArr[i].x && this.y == VirusArr[i].y) {
             VirusArr.splice(i, 1);
