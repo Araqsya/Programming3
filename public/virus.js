@@ -22,7 +22,7 @@ class Virus extends LivingCreature {
    mul() {
     var emptyCells = this.chooseCell(0);
     var newCell = random(emptyCells);
-    if (this.age ==25) {
+    if (this.age==25) {
         var newVirus = new Virus(newCell[0], newCell[1], this.index);
         VirusArr.push(newVirus);
         matrix[newCell[1]][newCell[0]] == 8;

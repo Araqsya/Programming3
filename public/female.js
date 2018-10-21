@@ -1,7 +1,8 @@
-class Female  extends  LivingCreature {
-   constructor(x, y, index){
+class Female extends LivingCreature {
+    constructor(x, y, index) {
         super(x, y, index);
         this.energy = 20;
+        this.multiply = 0;
     }
     getNewCoordinates() {
         this.directions = [
@@ -15,10 +16,10 @@ class Female  extends  LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
-     chooseCell(character) {
-       this.getNewCoordinates();
-       return super.chooseCell(character);
-   }
+    chooseCell(character) {
+        this.getNewCoordinates();
+        return super.chooseCell(character);
+    }
     die() {
 
         for (var i in MaleArr) {
@@ -45,6 +46,7 @@ class Female  extends  LivingCreature {
             }
         }
     }
+
     mul() {
         var emptyCells = this.chooseCell(6);
         var Man2 = random(emptyCells);
@@ -102,7 +104,7 @@ class Female  extends  LivingCreature {
                     break;
                 }
             }
-            this.mul();
+            
         }
 
         var emptyCells = this.chooseCell(3);
@@ -121,7 +123,6 @@ class Female  extends  LivingCreature {
                     break;
                 }
             }
-            this.mul();
         }
 
         var emptyCells = this.chooseCell(2);
@@ -140,7 +141,6 @@ class Female  extends  LivingCreature {
                     break;
                 }
             }
-            this.mul();
         }
 
         var emptyCells = this.chooseCell(1);
@@ -159,7 +159,15 @@ class Female  extends  LivingCreature {
                     break;
                 }
             }
-            this.mul();
+            if (FemaleArr.length >= 15) {
+                this.multiply++
+                if (this.multiply % 10 == 0) {
+                    this.mul();
+                }
+            }
+            else if(FemaleArr.length < 15){
+                this.mul();
+            }
         }
         else {
             this.move();

@@ -1,3 +1,5 @@
+var weather =0;
+weather++;
 function createMatrix(n, m) {
     var matrix1 = [];
     for (var y = 0; y < m; y++) {
@@ -27,11 +29,10 @@ function createMatrix(n, m) {
     matrix1[45][64] = 8;
     matrix1[35][4] = 8;
     matrix1[56][24] = 8;
-    matrix1[46][34] = 9;
 
 
-    
-    
+
+
     return matrix1;
 }
 var grassArr = [];
@@ -41,15 +42,16 @@ var BirdArr = [];
 var EggArr = [];
 var MaleArr = [];
 var FemaleArr = [];
-var VirusArr=[];
+var VirusArr = [];
 var TXCgrassArr = [];
+var FireArr = [];
 var matrix = createMatrix(100, 100);
 
 var side = 5;
 
 function setup() {
-    frameRate(16);
-    createCanvas(matrix[0].length * side, matrix.length * side, );
+    frameRate(10);
+    createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac');
 
     for (var y = 0; y < matrix.length; y++) {
@@ -75,12 +77,15 @@ function setup() {
             else if (matrix[y][x] == 7) {
                 FemaleArr.push(new Female(x, y, 7))
             }
-            else if (matrix[y][x] == 8) {
-                VirusArr.push(new Virus(x, y, 8))
-            }
-            else  if (matrix[y][x] == 9) {
+             else if (matrix[y][x] == 8) {
+                 VirusArr.push(new Virus(x, y, 8))
+             }
+             else  if (matrix[y][x] == 9) {
                 TXCgrassArr.push(new TXCgrass(x, y, 9))
-            }
+             }
+             else  if (matrix[y][x] == 10) {
+                FireArr.push(new Fire(x, y, 9))
+             }
         }
     }
 }
@@ -115,31 +120,37 @@ function draw() {
                 fill('#FF00FF');
                 rect(x * side, y * side, side, side);
             }
-            else if (matrix[y][x] == 8) {
-                fill('black');
+             else if (matrix[y][x] == 8) {
+                 fill('black');
+                 rect(x * side, y * side, side, side);
+             }
+            else if (matrix[y][x] == 9) {
+                fill('lightgreen');
                 rect(x * side, y * side, side, side);
             }
-            else  if (matrix[y][x] == 9) {
-                fill('lightgreen');
+            else if (matrix[y][x] == 10) {
+                fill('#FF5E00');
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 0) {
                 fill('#acacac');
                 rect(x * side, y * side, side, side);
             }
-            
+
         }
     }
-    for (var i in grassArr) {
+    for (let i in grassArr) {
         grassArr[i].mul();
     }
-    for (var i in GrassEaterArr) {
+
+    for (let i in GrassEaterArr) {
         GrassEaterArr[i].eat();
     }
-
+    
     for (var i in PredatorArr) {
         PredatorArr[i].eat();
     }
+    
 
     for (var i in BirdArr) {
         BirdArr[i].eat();
@@ -153,11 +164,15 @@ function draw() {
     for (var i in FemaleArr) {
         FemaleArr[i].eat();
     }
-    for (var i in VirusArr) {
-        VirusArr[i].move();
+     for (var i in VirusArr) {
+         VirusArr[i].move();
+     }
+     for (var i in TXCgrassArr) {
+        TXCgrassArr[i].TXCfire();
     }
-
-
+    for (var i in FireArr) {
+        FireArr[i].die();
+    }
 }
 
 

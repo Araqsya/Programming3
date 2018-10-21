@@ -3,30 +3,17 @@ class TXCgrass extends LivingCreature {
         super(x, y, index);
         this.multiply = 0
     }
-    getNewCoordinates() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+    TXCfire() {
+       
+        if (TXCgrassArr.length >= 200) {
+            for (var i=0; i<100; i++) {
+                if (this.x == TXCgrassArr[i].x && this.y == TXCgrassArr[i].y) {
+                    TXCgrassArr.splice(i, 1);
+                    matrix[this.y][this.x] = 10
+                    var newFire = new Fire(this.x, this.y, 10);
+                    FireArr.push(newFire);
+                    break;
+                }
+            }
     }
-    chooseCell(character) {
-        this.getNewCoordinates();
-        return super.chooseCell(character);
-    }
-    mul() {
-        this.multiply++;
-        var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
-        if (this.multiply ==7 && newCell) {
-            var newGrass = new TXCgrass(newCell[0], newCell[1], this.index, this.inf);
-            grassArr.push(newGrass);
-            matrix[newCell[1]][newCell[0]] = 9;
-            this.multiply = 0;
-        }
-    }}
+}}
