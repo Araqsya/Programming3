@@ -2,6 +2,13 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+var Egg = require("./egg"); 
+var eggArr = [];
+
+eggArr.push(new Egg(1, 2, 4));
+
+eggArr[0].mul(eggArr);
+
 // Define the port to run on
 app.set('port', process.env.PORT || 3000);
 

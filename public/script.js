@@ -1,60 +1,27 @@
-var weather =0;
-weather++;
-function createMatrix(n, m) {
-    var matrix1 = [];
-    for (var y = 0; y < m; y++) {
-        matrix1[y] = [];
-        for (var x = 0; x < n; x++) {
-            matrix1[y][x] = Math.round(Math.random())
-        }
-    }
-    matrix1[89][15] = 2;
-    matrix1[8][99] = 2;
-    matrix1[5][55] = 2;
-    matrix1[87][63] = 2;
-    matrix1[31][75] = 2;
-    matrix1[22][63] = 2;
-    matrix1[92][5] = 3;
-    matrix1[5][88] = 3;
-    matrix1[30][49] = 3;
-    matrix1[99][9] = 3;
-    matrix1[5][0] = 3;
-    matrix1[0][99] = 5;
-    matrix1[99][99] = 5;
-    matrix1[0][0] = 5;
-    matrix1[99][0] = 5;
-    matrix1[51][45] = 6;
-    matrix1[49][45] = 6;
-    matrix1[50][46] = 7;
-    matrix1[45][64] = 8;
-    matrix1[35][4] = 8;
-    matrix1[56][24] = 8;
 
+// var grassArr = [];
+// var GrassEaterArr = [];
+// var PredatorArr = [];
+// var BirdArr = [];
+// var EggArr = [];31
+// var MaleArr = [];
+// var FemaleArr = [];
+// var VirusArr = [];
+// var TXCgrassArr = [];
+// var FireArr = [];
 
-
-
-    return matrix1;
-}
-var grassArr = [];
-var GrassEaterArr = [];
-var PredatorArr = [];
-var BirdArr = [];
-var EggArr = [];
-var MaleArr = [];
-var FemaleArr = [];
-var VirusArr = [];
-var TXCgrassArr = [];
-var FireArr = [];
-var matrix = createMatrix(100, 100);
-
+// var matrix = createMatrix(100, 100);
+var matrix;
 var side = 5;
-
+ socket.on("create mtx", function(mtx){matrix = mtx});
 function setup() {
     frameRate(10);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac');
 
-    for (var y = 0; y < matrix.length; y++) {
+   
+
+    /*for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
                 grassArr.push(new Grass(x, y, 1))
@@ -87,7 +54,7 @@ function setup() {
                 FireArr.push(new Fire(x, y, 9))
              }
         }
-    }
+    }*/
 }
 function draw() {
     for (var y = 0; y < matrix.length; y++) {
@@ -109,7 +76,7 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 5) {
-                fill('orange');
+                fill('#FEB1B1');
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 6) {
@@ -129,7 +96,7 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 10) {
-                fill('#FF5E00');
+                fill('orange');
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 0) {
@@ -139,7 +106,7 @@ function draw() {
 
         }
     }
-    for (let i in grassArr) {
+    /*for (let i in grassArr) {
         grassArr[i].mul();
     }
 
@@ -172,7 +139,7 @@ function draw() {
     }
     for (var i in FireArr) {
         FireArr[i].die();
-    }
+    }*/
 }
 
 
