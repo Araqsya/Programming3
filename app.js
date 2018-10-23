@@ -1,7 +1,8 @@
 var express = require('express');
 var path = require('path');
+var socket = require("socket.io")
 var app = express();
-var LivingCreature = require("./modules/livingcreature")
+
 var Grass = require("./modules/grass")
 var GrassEater = require("./modules/grasseater");
 var Predator = require("./modules/predator");
@@ -12,6 +13,7 @@ var Female = require("./modules/female")
 var Virus = require('./modules/virus')
 var TXCgrass = require("./modules/txcgrass")
 var Fire = require("./modules/fire")
+
 var grassArr = [];
 var GrassEaterArr = [];
 var PredatorArr = [];
@@ -22,7 +24,9 @@ var FemaleArr = [];
 var VirusArr = [];
 var TXCgrassArr = [];
 var FireArr = [];
+
 var createMatrix = require("./modules/matrix")
+
 var matrix = createMatrix(100, 100);
 for (var y = 0; y < matrix.length; y++) {
   for (var x = 0; x < matrix[y].length; x++) {
@@ -58,6 +62,7 @@ for (var y = 0; y < matrix.length; y++) {
     }
   }
 }
+
 for (let i in grassArr) {
   grassArr[i].mul(grassArr, TXCgrassArr);
 }
