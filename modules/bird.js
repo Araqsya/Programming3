@@ -29,17 +29,17 @@ module.exports = class Bird  extends  LivingCreature {
                 break;
             }
         }
-        matrix[this.y][this.x] = 0
+        this.matrix[this.y][this.x] = 0
     }
 
     move(BirdArr) {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
         if (newCell) {
             var y = newCell[1]
             var x = newCell[0]
-            matrix[y][x] = 4
-            matrix[this.y][this.x] = 0
+            this.matrix[y][x] = 4
+            this.matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy--
@@ -51,12 +51,12 @@ module.exports = class Bird  extends  LivingCreature {
 
     eat(BirdArr, PredatorArr, grassArr) {
         var emptyCells = this.chooseCell(3);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            matrix[y][x] = 4
-            matrix[this.y][this.x] = 0
+            this.matrix[y][x] = 4
+            this.matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 3
@@ -69,12 +69,12 @@ module.exports = class Bird  extends  LivingCreature {
         }
         else {
             var emptyCells = this.chooseCell(1);
-            var newCell = random(emptyCells);
+            var newCell = this.random(emptyCells);
             if (newCell) {
                 var x = newCell[0]
                 var y = newCell[1]
-                matrix[y][x] = 4
-                matrix[this.y][this.x] = 0
+                this.matrix[y][x] = 4
+                this.matrix[this.y][this.x] = 0
                 this.y = y
                 this.x = x
                 this.energy += 2
