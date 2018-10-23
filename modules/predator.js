@@ -85,7 +85,7 @@ module.exports=class Predator extends  LivingCreature {
             }
             this.mul(PredatorArr);
         } else {
-            this.move(PredatorAr);
+            this.move(PredatorArr);
         }
     }
 }

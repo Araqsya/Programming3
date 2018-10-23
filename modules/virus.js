@@ -20,7 +20,7 @@ module.exports=class Virus extends LivingCreature {
        this.getNewCoordinates();
        return super.chooseCell(character);
    }
-   mul() {
+   mul(VirusArr) {
     var emptyCells = this.chooseCell(0);
     var newCell = this.random(emptyCells);
     if (this.age==25) {
@@ -29,7 +29,7 @@ module.exports=class Virus extends LivingCreature {
         this.matrix[newCell[1]][newCell[0]] == 8;
     }   
 }
-die() {
+die(VirusArr) {
     if (this.age >=30 ) {
     for (var i in VirusArr) {
         if (this.x == VirusArr[i].x && this.y == VirusArr[i].y) {
@@ -39,7 +39,7 @@ die() {
     }
     this.matrix[this.y][this.x] = 0
 }}
-    move() {
+    move(VirusArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -50,8 +50,8 @@ die() {
             this.y = y
             this.x = x
             this.age++
-            this.die();
-            this.mul();
+            this.die(VirusArr);
+            this.mul(VirusArr);
         }
     }
    

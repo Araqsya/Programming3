@@ -5,7 +5,7 @@ module.exports=class TXCgrass extends LivingCreature {
         super(x, y, index, matrix);
         this.multiply = 0
     }
-    TXCfire() {
+    TXCfire(TXCgrassArr, FireArr) {
        
         if (TXCgrassArr.length >= 200) {
             for (var i=0; i<100; i++) {

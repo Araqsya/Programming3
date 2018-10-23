@@ -22,7 +22,7 @@ module.exports=class Female extends LivingCreature {
         this.getNewCoordinates();
         return super.chooseCell(character);
     }
-    die() {
+    die(FemaleArr) {
 
         for (var i in MaleArr) {
             if (this.x == FemaleArr[i].x && this.y == FemaleArr[i].y) {
@@ -32,7 +32,7 @@ module.exports=class Female extends LivingCreature {
         }
         this.matrix[this.y][this.x] = 0
     }
-    move() {
+    move(FemaleArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -44,12 +44,12 @@ module.exports=class Female extends LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die();
+                this.die(FemaleArr);
             }
         }
     }
 
-    mul() {
+    mul(FemaleArr, MaleArr) {
         var emptyCells = this.chooseCell(6);
         var Man2 = this.random(emptyCells);
         if (Man2) {
@@ -172,7 +172,7 @@ module.exports=class Female extends LivingCreature {
             }
         }
         else {
-            this.move();
+            this.move(FemaleArr);
 
         }
     }

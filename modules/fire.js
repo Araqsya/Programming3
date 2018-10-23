@@ -4,7 +4,7 @@ module.exports=class Fire extends LivingCreature {
         super(x, y, index, matrix);
         this.multiply = 0
     }
-    die() {
+    die(FireArr) {
         this.multiply++
         if (this.multiply == 10) {
             for (var i in FireArr) {
