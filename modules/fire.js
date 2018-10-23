@@ -1,5 +1,5 @@
 var LivingCreature= require("./livingcreature")
-class Fire extends LivingCreature {
+module.exports=class Fire extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.multiply = 0

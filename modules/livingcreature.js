@@ -1,5 +1,6 @@
 module.exports = class LivingCreature {
-    constructor(x, y, index) {
+    constructor(x, y, index, matrix) {
+        var matrix=matrix;
         this.x = x;
         this.y = y;
         this.multiply = 0;

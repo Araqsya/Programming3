@@ -1,6 +1,6 @@
 var LivingCreature= require("./livingcreature")
 var Male=require("./male")
-class Female extends LivingCreature {
+module.exports=class Female extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 20;

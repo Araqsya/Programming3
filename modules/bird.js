@@ -21,7 +21,7 @@ module.exports = class Bird  extends  LivingCreature {
        return super.chooseCell(character);
    }
 
-    die(matrix) {
+    die(BirdArr, matrix) {
 
         for (var i in BirdArr) {
             if (this.x == BirdArr[i].x && this.y == BirdArr[i].y) {
@@ -32,7 +32,7 @@ module.exports = class Bird  extends  LivingCreature {
         matrix[this.y][this.x] = 0
     }
 
-    move() {
+    move(BirdArr, matrix) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         if (newCell) {
@@ -44,12 +44,12 @@ module.exports = class Bird  extends  LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die();
+                this.die(BirdArr, matrix);
             }
         }
     }
 
-    eat() {
+    eat(BirdArr, PredatorArr, grassArr, matrix) {
         var emptyCells = this.chooseCell(3);
         var newCell = random(emptyCells);
         if (newCell) {
@@ -86,7 +86,7 @@ module.exports = class Bird  extends  LivingCreature {
                 }
             }
             else {
-                this.move();
+                this.move(BirdArr, matrix);
             }
         }
     }
