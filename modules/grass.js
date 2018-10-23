@@ -11,13 +11,13 @@ module.exports=class Grass extends LivingCreature {
         else return false;
     }
 
-    mul() {
+    mul(grassArr, TXCgrassArr, matrix) {
         this.multiply++;
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
 
         if (this.multiply >= 60 && this.infection()) {
-            this.transtoxic();
+            this.transtoxic(grassArr,TXCgrassArr, matrix);
         }
         else if (this.multiply >= 5 && newCell) {
             var newGrass = new Grass(newCell[0], newCell[1], this.index);
@@ -28,7 +28,7 @@ module.exports=class Grass extends LivingCreature {
             this.multiply = 0;
         }
     }
-    transtoxic() {
+    transtoxic(grassArr,TXCgrassArr, matrix) {
         for (let i in grassArr) {
             if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
 

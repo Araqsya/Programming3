@@ -20,7 +20,7 @@ module.exports=class Predator extends  LivingCreature {
        this.getNewCoordinates();
        return super.chooseCell(character);
    }
-    move() {
+    move(PredatorArr, matrix) {
         var emptyCells = this.chooseCell(0);
         var grassCells = this.chooseCell(1);
         var newCell1 = random(grassCells)
@@ -43,10 +43,10 @@ module.exports=class Predator extends  LivingCreature {
             this.energy--
             }
             if (this.energy == 0) {
-                this.die();
+                this.die(PredatorArr, matrix);
             }
         }
-    mul() {
+    mul(PredatorArr, matrix) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         if (this.energy >= 22) {
@@ -56,7 +56,7 @@ module.exports=class Predator extends  LivingCreature {
             this.energy = 12;
         }
     }
-    die() {
+    die(PredatorArr, matrix) {
 
         for (var i in PredatorArr) {
             if (this.x == PredatorArr[i].x && this.y == PredatorArr[i].y) {
@@ -66,7 +66,7 @@ module.exports=class Predator extends  LivingCreature {
         }
         matrix[this.y][this.x] = 0
     }
-    eat() {
+    eat(PredatorArr, GrassEaterArr, matrix) {
         var emptyCells = this.chooseCell(2);
         var newCell = random(emptyCells);
         if (newCell) {
@@ -83,9 +83,9 @@ module.exports=class Predator extends  LivingCreature {
                     break;
                 }
             }
-            this.mul();
+            this.mul(PredatorArr, matrix);
         } else {
-            this.move();
+            this.move(PredatorAr, matrix);
         }
     }
 }
