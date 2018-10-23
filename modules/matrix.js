@@ -1,4 +1,4 @@
-module.exports = function  createMatrix(n, m) {
+module.exports = function (n, m) {
     var matrix1 = [];
     for (var y = 0; y < m; y++) {
         matrix1[y] = [];

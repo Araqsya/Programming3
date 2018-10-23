@@ -1,7 +1,7 @@
 var LivingCreature= require("./livingcreature");
 module.exports = class Bird  extends  LivingCreature {
-   constructor(x, y, index){
-        super(x, y, index);
+   constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
         this.energy = 10;
     }
     getNewCoordinates() {
@@ -21,7 +21,7 @@ module.exports = class Bird  extends  LivingCreature {
        return super.chooseCell(character);
    }
 
-    die(BirdArr, matrix) {
+    die(BirdArr) {
 
         for (var i in BirdArr) {
             if (this.x == BirdArr[i].x && this.y == BirdArr[i].y) {
@@ -32,7 +32,7 @@ module.exports = class Bird  extends  LivingCreature {
         matrix[this.y][this.x] = 0
     }
 
-    move(BirdArr, matrix) {
+    move(BirdArr) {
         var emptyCells = this.chooseCell(0);
         var newCell = random(emptyCells);
         if (newCell) {
@@ -44,12 +44,12 @@ module.exports = class Bird  extends  LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(BirdArr, matrix);
+                this.die(BirdArr);
             }
         }
     }
 
-    eat(BirdArr, PredatorArr, grassArr, matrix) {
+    eat(BirdArr, PredatorArr, grassArr) {
         var emptyCells = this.chooseCell(3);
         var newCell = random(emptyCells);
         if (newCell) {
@@ -86,7 +86,7 @@ module.exports = class Bird  extends  LivingCreature {
                 }
             }
             else {
-                this.move(BirdArr, matrix);
+                this.move(BirdArr);
             }
         }
     }

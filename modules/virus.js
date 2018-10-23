@@ -1,7 +1,7 @@
 var LivingCreature= require("./livingcreature")
 module.exports=class Virus extends LivingCreature {
-    constructor(x, y, index){
-        super(x, y, index);
+    constructor(x, y, index, matrix){
+        super(x, y, index, matrix);
         this.age = 0;
     }
    getNewCoordinates() {
@@ -22,11 +22,11 @@ module.exports=class Virus extends LivingCreature {
    }
    mul() {
     var emptyCells = this.chooseCell(0);
-    var newCell = random(emptyCells);
+    var newCell = this.random(emptyCells);
     if (this.age==25) {
         var newVirus = new Virus(newCell[0], newCell[1], this.index);
         VirusArr.push(newVirus);
-        matrix[newCell[1]][newCell[0]] == 8;
+        this.matrix[newCell[1]][newCell[0]] == 8;
     }   
 }
 die() {
@@ -37,16 +37,16 @@ die() {
             break;
         }
     }
-    matrix[this.y][this.x] = 0
+    this.matrix[this.y][this.x] = 0
 }}
     move() {
         var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+        var newCell = this.random(emptyCells);
         if (newCell) {
             var y = newCell[1]
             var x = newCell[0]
-            matrix[y][x] = 8
-            matrix[this.y][this.x] = 0
+            this.matrix[y][x] = 8
+            this.matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.age++

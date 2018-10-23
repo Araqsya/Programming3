@@ -1,7 +1,7 @@
 var LivingCreature= require("./livingcreature")
 module.exports=class Fire extends LivingCreature {
-    constructor(x, y, index) {
-        super(x, y, index);
+    constructor(x, y, index, matrix) {
+        super(x, y, index, matrix);
         this.multiply = 0
     }
     die() {
@@ -13,7 +13,7 @@ module.exports=class Fire extends LivingCreature {
                     break;
                 }
             }
-            matrix[this.y][this.x] = 0
+           this.matrix[this.y][this.x] = 0
         }
     }
 }

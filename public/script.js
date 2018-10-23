@@ -3,6 +3,8 @@ var matrix;
 var side = 5;
  socket.on("create mtx", function(mtx){matrix = mtx});
 function setup() {
+    //var socket = io.connect();
+    //socket.on('receive matrix', function(mtx){ matrix = mtx;})
     frameRate(10);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('#acacac');

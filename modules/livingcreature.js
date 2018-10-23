@@ -1,6 +1,6 @@
 module.exports = class LivingCreature {
     constructor(x, y, index, matrix) {
-        var matrix=matrix;
+        this.matrix = matrix;
         this.x = x;
         this.y = y;
         this.multiply = 0;
@@ -24,13 +24,17 @@ module.exports = class LivingCreature {
         for (let i in this.directions) {
             var x = this.directions[i][0];
             var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
+            if (x >= 0 && x < this.matrix[0].length && y >= 0 && y < this.matrix.length) {
+                if (this.matrix[y][x] == ch) {
                     found.push(this.directions[i]);
                 }
             }
         }
         return found;
+    }
+    random(arr) {
+        var item = arr[Math.floor(Math.random() * arr.length)];
+        return item
     }
 }
 
