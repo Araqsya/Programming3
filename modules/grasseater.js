@@ -1,7 +1,7 @@
 var LivingCreature= require("./livingcreature")
 module.exports=class GrassEater extends LivingCreature {
-    constructor(x, y, index, matrix) {
-        super(x, y, index, matrix);
+    constructor(x, y, index) {
+        super(x, y, index);
         this.energy = 10;
     }
     getNewCoordinates() {
@@ -16,37 +16,37 @@ module.exports=class GrassEater extends LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
-    chooseCell(character) {
+    chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
     }
-    move(GrassEaterArr) {
-        var emptyCells = this.chooseCell(0);
+    move(GrassEaterArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var y = newCell[1]
             var x = newCell[0]
-            this.matrix[y][x] = 2
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 2
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(GrassEaterArr);
+                this.die(GrassEaterArr, matrix);
             }
         }
     }
-    mul(GrassEaterArr) {
-        var emptyCells = this.chooseCell(0);
+    mul(GrassEaterArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (this.energy==28) {
             var newGrassEater = new GrassEater(newCell[0], newCell[1], this.index);
             GrassEaterArr.push(newGrassEater);
-            this.matrix[newCell[1]][newCell[0]] = this.index;
+            matrix[newCell[1]][newCell[0]] = this.index;
             this.energy = 10;
         }
     }
-    die(GrassEaterArr) {
+    die(GrassEaterArr, matrix) {
 
         for (var i in GrassEaterArr) {
             if (this.x == GrassEaterArr[i].x && this.y == GrassEaterArr[i].y) {
@@ -54,18 +54,18 @@ module.exports=class GrassEater extends LivingCreature {
                 break;
             }
         }
-        this.matrix[this.y][this.x] = 0
+        matrix[this.y][this.x] = 0
     }
-    eatToxic(newCell, TXCgrassArr, GrassEaterArr) {
+    eatToxic(newCell2, TXCgrassArr, GrassEaterArr, matrix) {
 
-        var y = newCell[1]
-        var x = newCell[0]
-        this.matrix[y][x] = 2
-        this.matrix[this.y][this.x] = 0
+        var y = newCell2[1]
+        var x = newCell2[0]
+        matrix[y][x] = 2
+        matrix[this.y][this.x] = 0
         this.y = y
         this.x = x
 
-        this.die(GrassEaterArr)
+        this.die(GrassEaterArr, matrix)
         for (var i in TXCgrassArr) {
             if (x == TXCgrassArr[i].x && y == TXCgrassArr[i].y) {
                 TXCgrassArr.splice(i, 1);
@@ -75,9 +75,9 @@ module.exports=class GrassEater extends LivingCreature {
 
     }
 
-    eat(GrassEaterArr, grassArr, TXCgrassArr) {
-        var grassCells = this.chooseCell(1);
-        var toxicCells = this.chooseCell(9);
+    eat(GrassEaterArr, grassArr, TXCgrassArr, matrix) {
+        var grassCells = this.chooseCell(1, matrix);
+        var toxicCells = this.chooseCell(9, matrix);
         var newCell = this.random(grassCells);
         var newCell2 = this.random(toxicCells);
         if (newCell) {
@@ -89,8 +89,8 @@ module.exports=class GrassEater extends LivingCreature {
                 if (x == grassArr[i].x && y == grassArr[i].y) {
                     grassArr.splice(i, 1);
 
-                    this.matrix[y][x] = this.index;
-                    this.matrix[this.y][this.x] = 0
+                    matrix[y][x] = this.index;
+                    matrix[this.y][this.x] = 0
 
                     this.y = y
                     this.x = x
@@ -101,9 +101,9 @@ module.exports=class GrassEater extends LivingCreature {
                 }
             }
 
-            this.mul(GrassEaterArr);
+            this.mul(GrassEaterArr, matrix);
         }
-        else if (newCell2) this.eatToxic(newCell2,  TXCgrassArr, GrassEaterArr)
-        else this.move(GrassEaterArr);
+        else if (newCell2) this.eatToxic(newCell2,  TXCgrassArr, GrassEaterArr, matrix)
+        else this.move(GrassEaterArr, matrix);
     }
 }

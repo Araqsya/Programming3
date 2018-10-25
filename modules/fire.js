@@ -1,10 +1,10 @@
 var LivingCreature= require("./livingcreature")
 module.exports=class Fire extends LivingCreature {
-    constructor(x, y, index, matrix) {
-        super(x, y, index, matrix);
+    constructor(x, y, index) {
+        super(x, y, index);
         this.multiply = 0
     }
-    die(FireArr) {
+    die(FireArr, matrix) {
         this.multiply++
         if (this.multiply == 10) {
             for (var i in FireArr) {
@@ -13,7 +13,7 @@ module.exports=class Fire extends LivingCreature {
                     break;
                 }
             }
-           this.matrix[this.y][this.x] = 0
+           matrix[this.y][this.x] = 0
         }
     }
 }

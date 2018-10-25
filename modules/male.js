@@ -1,7 +1,7 @@
-var LivingCreature= require("./livingcreature")
-module.exports=class Male  extends  LivingCreature {
-   constructor(x, y, index, matrix){
-        super(x, y, index, matrix);
+var LivingCreature = require("./livingcreature")
+module.exports = class Male extends LivingCreature {
+    constructor(x, y, index) {
+        super(x, y, index);
         this.energy = 15;
     }
     getNewCoordinates() {
@@ -16,12 +16,12 @@ module.exports=class Male  extends  LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
-     chooseCell(character) {
-       this.getNewCoordinates();
-       return super.chooseCell(character);
-   }
+    chooseCell(character, matrix) {
+        this.getNewCoordinates();
+        return super.chooseCell(character, matrix);
+    }
 
-    die(MaleArr) {
+    die(MaleArr, matrix) {
 
         for (var i in MaleArr) {
             if (this.x == MaleArr[i].x && this.y == MaleArr[i].y) {
@@ -29,32 +29,32 @@ module.exports=class Male  extends  LivingCreature {
                 break;
             }
         }
-        this.matrix[this.y][this.x] = 0
+        matrix[this.y][this.x] = 0
     }
-    move(MaleArr) {
-        var emptyCells = this.chooseCell(0);
-        var newCell = random(emptyCells);
+    move(MaleArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
+        var newCell = this.random(emptyCells);
         if (newCell) {
             var y = newCell[1]
             var x = newCell[0]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(MaleArr);
+                this.die(MaleArr, matrix);
             }
         }
     }
-    eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr) {
-        var emptyCells = this.chooseCell(5);
+    eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix) {
+        var emptyCells = this.chooseCell(5, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 3
@@ -66,13 +66,13 @@ module.exports=class Male  extends  LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(4);
+        var emptyCells = this.chooseCell(4, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -84,13 +84,13 @@ module.exports=class Male  extends  LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(3);
+        var emptyCells = this.chooseCell(3, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -102,13 +102,13 @@ module.exports=class Male  extends  LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(2);
+        var emptyCells = this.chooseCell(2, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -120,13 +120,13 @@ module.exports=class Male  extends  LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(1);
+        var emptyCells = this.chooseCell(1, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 6
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 6
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -138,7 +138,7 @@ module.exports=class Male  extends  LivingCreature {
             }
         }
         else {
-            this.move(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr);
+            this.move(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix);
 
         }
     }

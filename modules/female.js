@@ -1,8 +1,8 @@
 var LivingCreature= require("./livingcreature")
 var Male=require("./male")
 module.exports=class Female extends LivingCreature {
-    constructor(x, y, index, matrix) {
-        super(x, y, index, matrix);
+    constructor(x, y, index) {
+        super(x, y, index);
         this.energy = 20;
         this.multiply = 0;
     }
@@ -18,67 +18,67 @@ module.exports=class Female extends LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
-    chooseCell(character) {
+    chooseCell(character, matrix) {
         this.getNewCoordinates();
-        return super.chooseCell(character);
+        return super.chooseCell(character, matrix);
     }
-    die(FemaleArr) {
+    die(FemaleArr, matrix) {
 
-        for (var i in MaleArr) {
+        for (var i in FemaleArr) {
             if (this.x == FemaleArr[i].x && this.y == FemaleArr[i].y) {
                 FemaleArr.splice(i, 1);
                 break;
             }
         }
-        this.matrix[this.y][this.x] = 0
+        matrix[this.y][this.x] = 0
     }
-    move(FemaleArr) {
-        var emptyCells = this.chooseCell(0);
+    move(FemaleArr, matrix) {
+        var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var y = newCell[1]
             var x = newCell[0]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(FemaleArr);
+                this.die(FemaleArr, matrix);
             }
         }
     }
 
-    mul(FemaleArr, MaleArr) {
-        var emptyCells = this.chooseCell(6);
+    mul(FemaleArr, MaleArr, matrix) {
+        var emptyCells = this.chooseCell(6, matrix);
         var Man2 = this.random(emptyCells);
         if (Man2) {
 
-            var emptyCells = this.chooseCell(0);
+            var emptyCells = this.chooseCell(0, matrix);
             var newCell = this.random(emptyCells);
             var a = Math.round(Math.random())
             if (a == 1) {
                 var newFemale = new Female(newCell[0], newCell[1], this.index);
                 FemaleArr.push(newFemale);
-                this.matrix[newCell[1]][newCell[0]] == 6;
+               matrix[newCell[1]][newCell[0]] == 6;
                 this.energy = 12;
             }
             else {
                 var newMale = new Male(newCell[0], newCell[1], this.index);
                 MaleArr.push(newMale);
-                this.matrix[newCell[1]][newCell[0]] == 7;
+                matrix[newCell[1]][newCell[0]] == 7;
                 this.energy = 12;
             }
         }
     }
-    eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr) {
-        var emptyCells = this.chooseCell(5);
+    eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix) {
+        var emptyCells = this.chooseCell(5, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 3
@@ -90,13 +90,13 @@ module.exports=class Female extends LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(4);
+        var emptyCells = this.chooseCell(4, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -109,13 +109,13 @@ module.exports=class Female extends LivingCreature {
             
         }
 
-        var emptyCells = this.chooseCell(3);
+        var emptyCells = this.chooseCell(3, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -127,13 +127,13 @@ module.exports=class Female extends LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(2);
+        var emptyCells = this.chooseCell(2, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -145,13 +145,13 @@ module.exports=class Female extends LivingCreature {
             }
         }
 
-        var emptyCells = this.chooseCell(1);
+        var emptyCells = this.chooseCell(1, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
             var x = newCell[0]
             var y = newCell[1]
-            this.matrix[y][x] = 7
-            this.matrix[this.y][this.x] = 0
+            matrix[y][x] = 7
+            matrix[this.y][this.x] = 0
             this.y = y
             this.x = x
             this.energy += 2
@@ -164,15 +164,15 @@ module.exports=class Female extends LivingCreature {
             if (FemaleArr.length >= 15) {
                 this.multiply++
                 if (this.multiply % 10 == 0) {
-                    this.mul(FemaleArr, MaleArr);
+                    this.mul(FemaleArr, MaleArr, matrix);
                 }
             }
             else if(FemaleArr.length < 15){
-                this.mul(FemaleArr, MaleArr);
+                this.mul(FemaleArr, MaleArr, matrix);
             }
         }
         else {
-            this.move(FemaleArr);
+            this.move(FemaleArr, matrix);
 
         }
     }

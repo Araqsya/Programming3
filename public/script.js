@@ -1,12 +1,21 @@
-
 var matrix;
+var socket;
 var side = 5;
- socket.on("create mtx", function(mtx){matrix = mtx});
+ 
 function setup() {
+    frameRate(0);
     var socket = io.connect();
-    socket.on('receive matrix', function(mtx){ matrix = mtx;})
-    frameRate(10);
-    createCanvas(matrix[0].length * side, matrix.length * side);
+    socket.on("get matrix", function(mtx){
+        matrix = mtx
+        createCanvas(matrix[0].length * side, matrix.length * side);
+        noLoop();
+        
+        socket.on("redraw", function(mtx){
+            matrix=mtx;
+            redraw();
+        })
+    });
+    
     background('#acacac');
 
 }
@@ -57,28 +66,6 @@ function draw() {
                 fill('#acacac');
                 rect(x * side, y * side, side, side);
             }
-
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
