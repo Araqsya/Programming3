@@ -3,6 +3,13 @@ module.exports=class GrassEater extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 10;
+        var a = Math.round(Math.random())
+       if(a==1){
+           this.gender="female"
+       }
+        else{
+            this.gender="male"
+        }
     }
     getNewCoordinates() {
         this.directions = [
@@ -39,7 +46,8 @@ module.exports=class GrassEater extends LivingCreature {
     mul(GrassEaterArr, matrix) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
-        if (this.energy==28) {
+
+        if (this.energy==28 && this.gender=="female") {
             var newGrassEater = new GrassEater(newCell[0], newCell[1], this.index);
             GrassEaterArr.push(newGrassEater);
             matrix[newCell[1]][newCell[0]] = this.index;

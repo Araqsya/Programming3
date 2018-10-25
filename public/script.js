@@ -1,7 +1,10 @@
 var matrix;
 var socket;
 var side = 5;
- 
+ var weather=200;
+setInterval(function(){
+    weather++
+}, 100)
 function setup() {
     frameRate(0);
     var socket = io.connect();
@@ -23,7 +26,12 @@ function draw() {
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                fill('green');
+                fill('green')
+                if(weather%200>100){
+                     fill('#20B2AA')
+                }
+                   
+               
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 2) {
