@@ -23,6 +23,7 @@ module.exports = function (n, m) {
     matrix1[30][49] = 3;
     matrix1[99][9] = 3;
     matrix1[5][0] = 3;
+    matrix1[57][0] = 3;
     matrix1[0][99] = 5;
     matrix1[99][99] = 5;
     matrix1[0][0] = 5;

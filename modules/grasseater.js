@@ -47,7 +47,7 @@ module.exports=class GrassEater extends LivingCreature {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
-        if (this.energy==28 && this.gender=="female") {
+        if (this.energy==28 && newCell && this.gender=="female") {
             var newGrassEater = new GrassEater(newCell[0], newCell[1], this.index);
             GrassEaterArr.push(newGrassEater);
             matrix[newCell[1]][newCell[0]] = this.index;

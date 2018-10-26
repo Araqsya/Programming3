@@ -1,7 +1,8 @@
 var matrix;
 var socket;
 var side = 5;
- var weather=200;
+var weather=200;
+var stat = {};
 setInterval(function(){
     weather++
 }, 100)
@@ -10,12 +11,16 @@ function setup() {
     var socket = io.connect();
     socket.on("get matrix", function(mtx){
         matrix = mtx
-        createCanvas(matrix[0].length * side, matrix.length * side);
+        createCanvas(matrix[0].length * side + 800, matrix.length * side);
         noLoop();
         
         socket.on("redraw", function(mtx){
             matrix=mtx;
             redraw();
+        })
+
+        socket.on("get stat", function(data){
+            stat = data;
         })
     });
     
@@ -23,6 +28,17 @@ function setup() {
 
 }
 function draw() {
+    background('#acacac');
+
+    fill(50);
+    textSize(20);
+    var margin = 25; 
+    for(var i in stat)
+    {
+        text(i + ": " + stat[i], 600, margin);
+        margin += 25;
+    }  
+
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {

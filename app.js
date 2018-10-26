@@ -1,10 +1,9 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 var path = require('path');
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
-
-
 
 var Grass = require("./modules/grass")
 var GrassEater = require("./modules/grasseater");
@@ -18,15 +17,34 @@ var TXCgrass = require("./modules/txcgrass")
 var Fire = require("./modules/fire")
 
 var grassArr = [];
+var grasslifeArr=[];
+
 var GrassEaterArr = [];
+var grasseaterlifeArr=[];
+
 var PredatorArr = [];
+var predatorlifeArr=[];
+
 var BirdArr = [];
+var birdlifeArr=[];
+
 var EggArr = [];
+var egglifeArr = [];
+
 var MaleArr = [];
+var malelifeArr = [];
+
 var FemaleArr = [];
+var femalelifeArr = [];
+
 var VirusArr = [];
+var viruslifeArr = [];
+
 var TXCgrassArr = [];
+var txcgrass = [];
+
 var FireArr = [];
+var firelife = [];
 
 var createMatrix = require("./modules/matrix")
 
@@ -43,7 +61,7 @@ for (var y = 0; y < matrix.length; y++) {
       PredatorArr.push(new Predator(x, y, 3))
     }
     else if (matrix[y][x] == 5) {
-      EggArr.push(new Egg(x, y, 5, ))
+      EggArr.push(new Egg(x, y, 5))
     }
     else if (matrix[y][x] == 4) {
       BirdArr.push(new Bird(x, y, 4))
@@ -81,20 +99,21 @@ var framerate = 5;
 var drawTime = 1000 / framerate;
 
 io.on("connection", function (socket) {
-  socket.emit("get matrix", matrix)
+  socket.emit("get matrix", matrix);
+  var frameCount=0;
   var interval = setInterval(function () {
     for (let i in grassArr) {
       grassArr[i].mul(grassArr, TXCgrassArr, matrix);
     }
-    
+
     for (let i in GrassEaterArr) {
       GrassEaterArr[i].eat(GrassEaterArr, grassArr, TXCgrassArr, matrix);
     }
-    
-   for (var i in PredatorArr) {
+
+    for (var i in PredatorArr) {
       PredatorArr[i].eat(PredatorArr, GrassEaterArr, grassArr, matrix);
     }
-    
+
     for (var i in BirdArr) {
       BirdArr[i].eat(BirdArr, PredatorArr, grassArr, matrix);
     }
@@ -116,9 +135,37 @@ io.on("connection", function (socket) {
     for (var i in FireArr) {
       FireArr[i].die(FireArr, matrix);
     }
-   
+    
+    frameCount++
+    if(frameCount >= 60)
+    {
+      var stat = {
+        "Grass": grassArr.length,
+        "GrassEater" : GrassEaterArr.length,
+        "Predator": PredatorArr.length,
+        "Bird":BirdArr.length,
+        "Egg":EggArr.length,
+        "Male":MaleArr.length,
+        "Female":FemaleArr.length,
+        "Virus":VirusArr.length,
+        "Txcgrass":TXCgrassArr.length,
+        "Fire":FireArr.length,
+      };
+      socket.emit("get stat", stat)
+      main(stat);
+
+      frameCount = 0;
+    }
 
     socket.emit("redraw", matrix)
   }, drawTime)
+
+
+
+  function main(stat) {
+    var file = "obj.json";
+    fs.writeFileSync(file, JSON.stringify(stat));
+  }
+  
 
 })
