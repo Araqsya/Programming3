@@ -21,17 +21,19 @@ module.exports = class Male extends LivingCreature {
         return super.chooseCell(character, matrix);
     }
 
-    die(MaleArr, matrix) {
+    die(MaleArr, matrix, malelifeArr) {
 
         for (var i in MaleArr) {
             if (this.x == MaleArr[i].x && this.y == MaleArr[i].y) {
                 MaleArr.splice(i, 1);
+                malelifeArr[1]++
                 break;
+                
             }
         }
         matrix[this.y][this.x] = 0
     }
-    move(MaleArr, matrix) {
+    move(MaleArr, matrix, malelifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -43,11 +45,11 @@ module.exports = class Male extends LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(MaleArr, matrix);
+                this.die(MaleArr, matrix, malelifeArr);
             }
         }
     }
-    eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix) {
+    eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix, grasslifeArr, grasseaterlifeArr, predatorlifeArr, egglifeArr, birdlifeArr, malelifeArr) {
         var emptyCells = this.chooseCell(5, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -61,6 +63,7 @@ module.exports = class Male extends LivingCreature {
             for (var i in EggArr) {
                 if (x == EggArr[i].x && y == EggArr[i].y) {
                     EggArr.splice(i, 1);
+                    egglifeArr[1]++
                     break;
                 }
             }
@@ -79,6 +82,7 @@ module.exports = class Male extends LivingCreature {
             for (var i in BirdArr) {
                 if (x == BirdArr[i].x && y == BirdArr[i].y) {
                     BirdArr.splice(i, 1);
+                    birdlifeArr[1]++
                     break;
                 }
             }
@@ -97,6 +101,7 @@ module.exports = class Male extends LivingCreature {
             for (var i in PredatorArr) {
                 if (x == PredatorArr[i].x && y == PredatorArr[i].y) {
                     PredatorArr.splice(i, 1);
+                    predatorlifeArr[1]++
                     break;
                 }
             }
@@ -115,6 +120,7 @@ module.exports = class Male extends LivingCreature {
             for (var i in GrassEaterArr) {
                 if (x == GrassEaterArr[i].x && y == GrassEaterArr[i].y) {
                     GrassEaterArr.splice(i, 1);
+                    grasseaterlifeArr[1]++
                     break;
                 }
             }
@@ -133,12 +139,13 @@ module.exports = class Male extends LivingCreature {
             for (var i in grassArr) {
                 if (x == grassArr[i].x && y == grassArr[i].y) {
                     grassArr.splice(i, 1);
+                    grasslifeArr[1]++
                     break;
                 }
             }
         }
         else {
-            this.move(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix);
+            this.move(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix, malelifeArr);
 
         }
     }

@@ -17,34 +17,34 @@ var TXCgrass = require("./modules/txcgrass")
 var Fire = require("./modules/fire")
 
 var grassArr = [];
-var grasslifeArr=[];
+var grasslifeArr=[0, 0];
 
 var GrassEaterArr = [];
-var grasseaterlifeArr=[];
+var grasseaterlifeArr=[0, 0];
 
 var PredatorArr = [];
-var predatorlifeArr=[];
+var predatorlifeArr=[0, 0];
 
 var BirdArr = [];
-var birdlifeArr=[];
+var birdlifeArr=[0, 0];
 
 var EggArr = [];
-var egglifeArr = [];
+var egglifeArr = [0, 0];
 
 var MaleArr = [];
-var malelifeArr = [];
+var malelifeArr = [0, 0];
 
 var FemaleArr = [];
-var femalelifeArr = [];
+var femalelifeArr = [0, 0];
 
 var VirusArr = [];
-var viruslifeArr = [];
+var viruslifeArr = [0, 0];
 
 var TXCgrassArr = [];
-var txcgrass = [];
+var txcgrasslifeArr = [0, 0];
 
 var FireArr = [];
-var firelife = [];
+var firelifeArr = [0, 0];
 
 var createMatrix = require("./modules/matrix")
 
@@ -103,53 +103,53 @@ io.on("connection", function (socket) {
   var frameCount=0;
   var interval = setInterval(function () {
     for (let i in grassArr) {
-      grassArr[i].mul(grassArr, TXCgrassArr, matrix);
+      grassArr[i].mul(grassArr, TXCgrassArr, matrix, grasslifeArr, txcgrasslifeArr);
     }
 
     for (let i in GrassEaterArr) {
-      GrassEaterArr[i].eat(GrassEaterArr, grassArr, TXCgrassArr, matrix);
+      GrassEaterArr[i].eat(GrassEaterArr, grassArr, TXCgrassArr, matrix, grasseaterlifeArr, grasslifeArr, txcgrasslifeArr);
     }
 
     for (var i in PredatorArr) {
-      PredatorArr[i].eat(PredatorArr, GrassEaterArr, grassArr, matrix);
+      PredatorArr[i].eat(PredatorArr, GrassEaterArr, grassArr, matrix, grasseaterlifeArr, predatorlifeArr);
     }
 
     for (var i in BirdArr) {
-      BirdArr[i].eat(BirdArr, PredatorArr, grassArr, matrix);
+      BirdArr[i].eat(BirdArr, PredatorArr, grassArr, matrix, birdlifeArr, predatorlifeArr, grasslifeArr );
     }
     for (var i in EggArr) {
-      EggArr[i].mul(EggArr, BirdArr, matrix);
+      EggArr[i].mul(EggArr, BirdArr, matrix, egglifeArr, birdlifeArr);
     }
     for (var i in MaleArr) {
-      MaleArr[i].eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix);
+      MaleArr[i].eat(MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix, grasslifeArr, grasseaterlifeArr, predatorlifeArr, egglifeArr, birdlifeArr, malelifeArr);
     }
     for (var i in FemaleArr) {
-      FemaleArr[i].eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix);
+      FemaleArr[i].eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix, femalelifeArr, grasslifeArr, grasseaterlifeArr, predatorlifeArr, egglifeArr, birdlifeArr, malelifeArr);
     }
     for (var i in VirusArr) {
-      VirusArr[i].move(VirusArr, matrix);
+      VirusArr[i].move(VirusArr, matrix, viruslifeArr);
     }
     for (var i in TXCgrassArr) {
-      TXCgrassArr[i].TXCfire(TXCgrassArr, FireArr, matrix);
+      TXCgrassArr[i].TXCfire(TXCgrassArr, FireArr, matrix, txcgrasslifeArr, firelifeArr);
     }
     for (var i in FireArr) {
-      FireArr[i].die(FireArr, matrix);
+      FireArr[i].die(FireArr, matrix, firelifeArr);
     }
     
     frameCount++
     if(frameCount >= 60)
     {
       var stat = {
-        "Grass": grassArr.length,
-        "GrassEater" : GrassEaterArr.length,
-        "Predator": PredatorArr.length,
-        "Bird":BirdArr.length,
-        "Egg":EggArr.length,
-        "Male":MaleArr.length,
-        "Female":FemaleArr.length,
-        "Virus":VirusArr.length,
-        "Txcgrass":TXCgrassArr.length,
-        "Fire":FireArr.length,
+        "Grass": grassArr.length,  "grass-alive":grasslifeArr[0], "grass-dead":grasslifeArr[1],
+        "GrassEater" : GrassEaterArr.length,  "grasseater-alive":grasseaterlifeArr[0], "grasseater-dead":grasseaterlifeArr[1],
+        "Predator": PredatorArr.length, "predator-alive":predatorlifeArr[0], "predator-dead":predatorlifeArr[1],
+        "Bird":BirdArr.length, "bird-alive":birdlifeArr[0], "bird-dead":birdlifeArr[1],
+        "Egg":EggArr.length, "egg-alive":egglifeArr[0], "egg-dead":egglifeArr[1],
+        "Male":MaleArr.length, "male-alive":malelifeArr[0], "male-dead":malelifeArr[1],
+        "Female":FemaleArr.length, "female-alive":femalelifeArr[0], "female-dead":femalelifeArr[1],
+        "Virus":VirusArr.length,  "virus-alive":viruslifeArr[0], "virus-dead":viruslifeArr[1],
+        "Toxic grass":TXCgrassArr.length, "txcgrass-alive":txcgrasslifeArr[0], "txcgrass-dead":txcgrasslifeArr[1],
+        "Fire":FireArr.length, "fire-alive":firelifeArr[0], "fire-dead":firelifeArr[1],
       };
       socket.emit("get stat", stat)
       main(stat);

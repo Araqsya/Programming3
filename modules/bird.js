@@ -21,18 +21,19 @@ module.exports = class Bird  extends  LivingCreature {
        return super.chooseCell(character, matrix);
    }
 
-    die(BirdArr, matrix) {
+    die(BirdArr, matrix, birdlifeArr) {
 
         for (var i in BirdArr) {
             if (this.x == BirdArr[i].x && this.y == BirdArr[i].y) {
                 BirdArr.splice(i, 1);
+                birdlifeArr[1]++
                 break;
             }
         }
        matrix[this.y][this.x] = 0
     }
 
-    move(BirdArr, matrix) {
+    move(BirdArr, matrix, birdlifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -44,12 +45,12 @@ module.exports = class Bird  extends  LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(BirdArr, matrix);
+                this.die(BirdArr, matrix, birdlifeArr);
             }
         }
     }
 
-    eat(BirdArr, PredatorArr, grassArr, matrix) {
+    eat(BirdArr, PredatorArr, grassArr, matrix, birdlifeArr, predatorlifeArr, grasslifeArr ) {
         var emptyCells = this.chooseCell(3, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -63,6 +64,7 @@ module.exports = class Bird  extends  LivingCreature {
             for (var i in PredatorArr) {
                 if (x == PredatorArr[i].x && y == PredatorArr[i].y) {
                     PredatorArr.splice(i, 1);
+                    predatorlifeArr[1]++
                     break;
                 }
             }
@@ -81,12 +83,13 @@ module.exports = class Bird  extends  LivingCreature {
                 for (var i in grassArr) {
                     if (x == grassArr[i].x && y == grassArr[i].y) {
                         grassArr.splice(i, 1);
+                        grasslifeArr[1]++
                         break;
                     }
                 }
             }
             else {
-                this.move(BirdArr, matrix);
+                this.move(BirdArr, matrix, birdlifeArr);
             }
         }
     }

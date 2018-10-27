@@ -5,7 +5,7 @@ module.exports=class TXCgrass extends LivingCreature {
         super(x, y, index);
         this.multiply = 0
     }
-    TXCfire(TXCgrassArr, FireArr, matrix) {
+    TXCfire(TXCgrassArr, FireArr, matrix, txcgrasslifeArr, firelifeArr) {
        
         if (TXCgrassArr.length >= 200) {
             for (var i=0; i<100; i++) {
@@ -14,6 +14,8 @@ module.exports=class TXCgrass extends LivingCreature {
                     matrix[this.y][this.x] = 10
                     var newFire = new Fire(this.x, this.y, 10);
                     FireArr.push(newFire);
+                    txcgrasslifeArr[1]++
+                    firelifeArr[0]++
                     break;
                 }
             }

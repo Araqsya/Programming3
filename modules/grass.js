@@ -11,24 +11,24 @@ module.exports=class Grass extends LivingCreature {
         else return false;
     }
 
-    mul(grassArr, TXCgrassArr, matrix) {
+    mul(grassArr, TXCgrassArr, matrix, grasslifeArr, txcgrasslifeArr) {
         this.multiply++;
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
 
         if (this.multiply >= 60 && this.infection(matrix)) {
-            this.transtoxic(grassArr,TXCgrassArr, matrix);
+            this.transtoxic(grassArr,TXCgrassArr, matrix,  grasslifeArr,  txcgrasslifeArr);
         }
         else if (this.multiply >= 5 && newCell) {
             var newGrass = new Grass(newCell[0], newCell[1], this.index);
             grassArr.push(newGrass);
-
+            grasslifeArr[0]++
             matrix[newCell[1]][newCell[0]] = this.index;
 
             this.multiply = 0;
         }
     }
-    transtoxic(grassArr,TXCgrassArr, matrix) {
+    transtoxic(grassArr,TXCgrassArr, matrix,  grasslifeArr,  txcgrasslifeArr) {
         for (let i in grassArr) {
             if (this.x == grassArr[i].x && this.y == grassArr[i].y) {
 
@@ -37,7 +37,8 @@ module.exports=class Grass extends LivingCreature {
 
                 var newTXC = new TXCgrass(this.x, this.y, 9);
                 TXCgrassArr.push(newTXC);
-
+                txcgrasslifeArr[0]++
+                grasslifeArr[1]++
                 this.multiply = 0;
                 break;
             }

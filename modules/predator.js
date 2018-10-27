@@ -4,7 +4,7 @@ module.exports = class Predator extends LivingCreature {
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 100;
-        this.female = 0;
+       /* this.female = 0;
         this.male = 0;
         var a = Math.round(Math.random())
         if(a==1){
@@ -15,7 +15,7 @@ module.exports = class Predator extends LivingCreature {
              this.gender="male"
              this.male++
 
-         }
+         }*/
     }
     getNewCoordinates() {
         this.directions = [
@@ -33,7 +33,7 @@ module.exports = class Predator extends LivingCreature {
         this.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    move(PredatorArr, grassArr, matrix) {
+    move(PredatorArr, grassArr, matrix, predatorlifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var grassCells = this.chooseCell(1, matrix);
         var grass = this.random(grassCells)
@@ -64,32 +64,34 @@ module.exports = class Predator extends LivingCreature {
 
         this.energy--;
         if (this.energy == 0) {
-            this.die(PredatorArr, matrix);
+            this.die(PredatorArr, matrix, predatorlifeArr);
         }
         }
 
     }
-    mul(PredatorArr, matrix) {
+    mul(PredatorArr, matrix, predatorlifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
-        if (this.energy >= 18 && newCell && this.gender =="female") {
+        if (this.energy >= 18 && newCell /*&& this.gender =="female"*/) {
             var newPredator = new Predator(newCell[0], newCell[1], this.index);
             PredatorArr.push(newPredator);
+            predatorlifeArr[0]++
             matrix[newCell[1]][newCell[0]] = 3;
             this.energy = 12;
         }
     }
-    die(PredatorArr, matrix) {
+    die(PredatorArr, matrix, predatorlifeArr) {
 
         for (var i in PredatorArr) {
             if (this.x == PredatorArr[i].x && this.y == PredatorArr[i].y) {
                 PredatorArr.splice(i, 1);
+                predatorlifeArr[1]++
                 break;
             }
         }
         matrix[this.y][this.x] = 0
     }
-    eat(PredatorArr, GrassEaterArr, grassArr, matrix) {
+    eat(PredatorArr, GrassEaterArr, grassArr, matrix, grasseaterlifeArr, predatorlifeArr) {
         var emptyCells = this.chooseCell(2, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -103,12 +105,13 @@ module.exports = class Predator extends LivingCreature {
             for (var i in GrassEaterArr) {
                 if (x == GrassEaterArr[i].x && y == GrassEaterArr[i].y) {
                     GrassEaterArr.splice(i, 1);
+                    grasseaterlifeArr[1]++
                     break;
                 }
             }
-            this.mul(PredatorArr, matrix);
+            this.mul(PredatorArr, matrix, predatorlifeArr);
         } else {
-            this.move(PredatorArr, grassArr, matrix);
+            this.move(PredatorArr, grassArr, matrix, predatorlifeArr);
         }
     }
 }

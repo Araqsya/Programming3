@@ -22,17 +22,18 @@ module.exports=class Female extends LivingCreature {
         this.getNewCoordinates();
         return super.chooseCell(character, matrix);
     }
-    die(FemaleArr, matrix) {
+    die(FemaleArr, matrix, femalelifeArr) {
 
         for (var i in FemaleArr) {
             if (this.x == FemaleArr[i].x && this.y == FemaleArr[i].y) {
                 FemaleArr.splice(i, 1);
+                femalelifeArr[1]++
                 break;
             }
         }
         matrix[this.y][this.x] = 0
     }
-    move(FemaleArr, matrix) {
+    move(FemaleArr, matrix, femalelifeArr) {
         var emptyCells = this.chooseCell(0, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -44,12 +45,12 @@ module.exports=class Female extends LivingCreature {
             this.x = x
             this.energy--
             if (this.energy == 0) {
-                this.die(FemaleArr, matrix);
+                this.die(FemaleArr, matrix, femalelifeArr);
             }
         }
     }
 
-    mul(FemaleArr, MaleArr, matrix) {
+    mul(FemaleArr, MaleArr, matrix, femalelifeArr,  malelifeArr) {
         var emptyCells = this.chooseCell(6, matrix);
         var Man2 = this.random(emptyCells);
         if (Man2) {
@@ -60,18 +61,20 @@ module.exports=class Female extends LivingCreature {
             if (a == 1) {
                 var newFemale = new Female(newCell[0], newCell[1], this.index);
                 FemaleArr.push(newFemale);
+                femalelifeArr[0]++
                matrix[newCell[1]][newCell[0]] == 6;
                 this.energy = 12;
             }
             else {
                 var newMale = new Male(newCell[0], newCell[1], this.index);
                 MaleArr.push(newMale);
+                malelifeArr[0]++
                 matrix[newCell[1]][newCell[0]] == 7;
                 this.energy = 12;
             }
         }
     }
-    eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix) {
+    eat(FemaleArr, MaleArr, grassArr, GrassEaterArr, PredatorArr, EggArr, BirdArr, matrix, femalelifeArr, grasslifeArr, grasseaterlifeArr, predatorlifeArr, egglifeArr, birdlifeArr, malelifeArr) {
         var emptyCells = this.chooseCell(5, matrix);
         var newCell = this.random(emptyCells);
         if (newCell) {
@@ -85,6 +88,7 @@ module.exports=class Female extends LivingCreature {
             for (var i in EggArr) {
                 if (x == EggArr[i].x && y == EggArr[i].y) {
                     EggArr.splice(i, 1);
+                    egglifeArr[1]++
                     break;
                 }
             }
@@ -103,6 +107,7 @@ module.exports=class Female extends LivingCreature {
             for (var i in BirdArr) {
                 if (x == BirdArr[i].x && y == BirdArr[i].y) {
                     BirdArr.splice(i, 1);
+                    birdlifeArr[1]++
                     break;
                 }
             }
@@ -122,6 +127,7 @@ module.exports=class Female extends LivingCreature {
             for (var i in PredatorArr) {
                 if (x == PredatorArr[i].x && y == PredatorArr[i].y) {
                     PredatorArr.splice(i, 1);
+                    predatorlifeArr[1]++
                     break;
                 }
             }
@@ -140,6 +146,7 @@ module.exports=class Female extends LivingCreature {
             for (var i in GrassEaterArr) {
                 if (x == GrassEaterArr[i].x && y == GrassEaterArr[i].y) {
                     GrassEaterArr.splice(i, 1);
+                    grasseaterlifeArr[1]++
                     break;
                 }
             }
@@ -158,21 +165,22 @@ module.exports=class Female extends LivingCreature {
             for (var i in grassArr) {
                 if (x == grassArr[i].x && y == grassArr[i].y) {
                     grassArr.splice(i, 1);
+                    grasslifeArr[1]++
                     break;
                 }
             }
             if (FemaleArr.length >= 15) {
                 this.multiply++
-                if (this.multiply % 10 == 0) {
-                    this.mul(FemaleArr, MaleArr, matrix);
+                if (this.multiply % 15 == 0) {
+                    this.mul(FemaleArr, MaleArr, matrix, femalelifeArr, malelifeArr);
                 }
             }
             else if(FemaleArr.length < 15){
-                this.mul(FemaleArr, MaleArr, matrix);
+                this.mul(FemaleArr, MaleArr, matrix, femalelifeArr,  malelifeArr);
             }
         }
         else {
-            this.move(FemaleArr, matrix);
+            this.move(FemaleArr, matrix, femalelifeArr);
 
         }
     }
