@@ -150,21 +150,7 @@ io.on("connection", function (socket) {
     {
 
       generateStats();
-      /*var stat = {
-        "Grass": grassArr.length,  "grass-alive":grasslifeArr[0], "grass-dead":grasslifeArr[1],
-        "GrassEater" : GrassEaterArr.length,  "grasseater-alive":grasseaterlifeArr[0], "grasseater-dead":grasseaterlifeArr[1],
-        "Predator": PredatorArr.length, "predator-alive":predatorlifeArr[0], "predator-dead":predatorlifeArr[1],
-        "Bird":BirdArr.length, "bird-alive":birdlifeArr[0], "bird-dead":birdlifeArr[1],
-        "Egg":EggArr.length, "egg-alive":egglifeArr[0], "egg-dead":egglifeArr[1],
-        "Male":MaleArr.length, "male-alive":malelifeArr[0], "male-dead":malelifeArr[1],
-        "Female":FemaleArr.length, "female-alive":femalelifeArr[0], "female-dead":femalelifeArr[1],
-        "Virus":VirusArr.length,  "virus-alive":viruslifeArr[0], "virus-dead":viruslifeArr[1],
-        "Toxic grass":TXCgrassArr.length, "txcgrass-alive":txcgrasslifeArr[0], "txcgrass-dead":txcgrasslifeArr[1],
-        "Fire":FireArr.length, "fire-alive":firelifeArr[0], "fire-dead":firelifeArr[1],
-      };
-      socket.emit("get stat", stat)
-      main(stat);*/
-
+      
       frameCount = 0;
     }
 
