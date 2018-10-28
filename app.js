@@ -5,7 +5,7 @@ var path = require('path');
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
-var Grass = require("./modules/grass")
+var Grass = require("./modules/grass");
 var GrassEater = require("./modules/grasseater");
 var Predator = require("./modules/predator");
 var Bird = require("./modules/bird");
