@@ -84,7 +84,15 @@ for (var y = 0; y < matrix.length; y++) {
   }
 }
 
-
+grasslifeArr[0]       += grassArr.length;
+grasseaterlifeArr[0]  += GrassEaterArr.length;
+predatorlifeArr[0]    += PredatorArr.length;
+egglifeArr[0]         += EggArr.length;
+malelifeArr[0]        += MaleArr.length;
+femalelifeArr[0]      += FemaleArr.length;
+viruslifeArr[0]       += VirusArr.length;
+txcgrasslifeArr[0]    += TXCgrassArr.length;
+firelifeArr[0]        += FireArr.length;
 
 app.use(express.static('public'));
 
@@ -100,6 +108,7 @@ var drawTime = 1000 / framerate;
 
 io.on("connection", function (socket) {
   socket.emit("get matrix", matrix);
+  generateStats();
   var frameCount=0;
   var interval = setInterval(function () {
     for (let i in grassArr) {
@@ -139,7 +148,9 @@ io.on("connection", function (socket) {
     frameCount++
     if(frameCount >= 60)
     {
-      var stat = {
+
+      generateStats();
+      /*var stat = {
         "Grass": grassArr.length,  "grass-alive":grasslifeArr[0], "grass-dead":grasslifeArr[1],
         "GrassEater" : GrassEaterArr.length,  "grasseater-alive":grasseaterlifeArr[0], "grasseater-dead":grasseaterlifeArr[1],
         "Predator": PredatorArr.length, "predator-alive":predatorlifeArr[0], "predator-dead":predatorlifeArr[1],
@@ -152,7 +163,7 @@ io.on("connection", function (socket) {
         "Fire":FireArr.length, "fire-alive":firelifeArr[0], "fire-dead":firelifeArr[1],
       };
       socket.emit("get stat", stat)
-      main(stat);
+      main(stat);*/
 
       frameCount = 0;
     }
@@ -160,7 +171,23 @@ io.on("connection", function (socket) {
     socket.emit("redraw", matrix)
   }, drawTime)
 
-
+  function generateStats()
+  {
+    var stat = {
+      "Grass": grassArr.length,  "grass-alive":grasslifeArr[0], "grass-dead":grasslifeArr[1],
+      "GrassEater" : GrassEaterArr.length,  "grasseater-alive":grasseaterlifeArr[0], "grasseater-dead":grasseaterlifeArr[1],
+      "Predator": PredatorArr.length, "predator-alive":predatorlifeArr[0], "predator-dead":predatorlifeArr[1],
+      "Bird":BirdArr.length, "bird-alive":birdlifeArr[0], "bird-dead":birdlifeArr[1],
+      "Egg":EggArr.length, "egg-alive":egglifeArr[0], "egg-dead":egglifeArr[1],
+      "Male":MaleArr.length, "male-alive":malelifeArr[0], "male-dead":malelifeArr[1],
+      "Female":FemaleArr.length, "female-alive":femalelifeArr[0], "female-dead":femalelifeArr[1],
+      "Virus":VirusArr.length,  "virus-alive":viruslifeArr[0], "virus-dead":viruslifeArr[1],
+      "Toxic grass":TXCgrassArr.length, "txcgrass-alive":txcgrasslifeArr[0], "txcgrass-dead":txcgrasslifeArr[1],
+      "Fire":FireArr.length, "fire-alive":firelifeArr[0], "fire-dead":firelifeArr[1],
+    };
+    socket.emit("get stat", stat)
+    main(stat);
+  }
 
   function main(stat) {
     var file = "obj.json";

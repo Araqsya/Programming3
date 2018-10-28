@@ -22,7 +22,7 @@ module.exports=class Grass extends LivingCreature {
         else if (this.multiply >= 5 && newCell) {
             var newGrass = new Grass(newCell[0], newCell[1], this.index);
             grassArr.push(newGrass);
-            grasslifeArr[0]++
+            grasslifeArr[0]++;
             matrix[newCell[1]][newCell[0]] = this.index;
 
             this.multiply = 0;
